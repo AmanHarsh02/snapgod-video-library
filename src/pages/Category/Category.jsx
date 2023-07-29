@@ -9,6 +9,10 @@ export function Category() {
   const [videosByCategory, setVideosByCategory] = useState([]);
 
   useEffect(() => {
+    document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
     const videosByCategory = getVideosByCategory(categoryName);
     setVideosByCategory(videosByCategory, categoryName);
   }, [videos]);
@@ -18,7 +22,7 @@ export function Category() {
       <h1>{categoryName}</h1>
 
       {videosByCategory.length > 0 && (
-        <div className="my-6 flex gap-4 flex-wrap">
+        <div className="my-6 flex gap-4 justify-center md:justify-start  flex-wrap">
           {videosByCategory.map((video) => {
             return <VideoCard video={video} key={video._id} />;
           })}

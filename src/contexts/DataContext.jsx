@@ -8,6 +8,7 @@ const DataContext = createContext();
 export function DataProvider({ children }) {
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
   const storedVideos = localStorage.getItem("videos");
+  const storedPlaylists = localStorage.getItem("playlists");
 
   useEffect(() => {
     dataDispatch({ type: "SET_CATEGORIES", payload: categories });
@@ -16,6 +17,13 @@ export function DataProvider({ children }) {
       dataDispatch({ type: "SET_VIDEOS", payload: JSON.parse(storedVideos) });
     } else {
       dataDispatch({ type: "SET_VIDEOS", payload: videos });
+    }
+
+    if (storedPlaylists) {
+      dataDispatch({
+        type: "SET_PLAYLISTS",
+        payload: JSON.parse(storedPlaylists),
+      });
     }
   }, []);
 
@@ -99,6 +107,66 @@ export function DataProvider({ children }) {
     localStorage.setItem("videos", JSON.stringify(updatedVideos));
   };
 
+  const handleAddToPlaylist = (videoId, playlist) => {
+    let updatedPlaylists = [...dataState.playlists];
+    const playlistExists = updatedPlaylists.find(
+      ({ id }) => id === +playlist?.id
+    );
+
+    if (playlistExists) {
+      const newPlaylist = {
+        ...playlist,
+        videos: [...playlist.videos, videoId],
+      };
+
+      updatedPlaylists = updatedPlaylists.map((list) => {
+        if (list.id === +playlist?.id) {
+          return { ...newPlaylist };
+        }
+        return { ...list };
+      });
+    } else {
+      const newPlaylist = {
+        ...playlist,
+        id:
+          updatedPlaylists.length > 0
+            ? updatedPlaylists.slice(-1)[0].id + 1
+            : 1,
+        videos: [videoId],
+      };
+
+      updatedPlaylists = [...updatedPlaylists, newPlaylist];
+    }
+
+    dataDispatch({ type: "SET_PLAYLISTS", payload: updatedPlaylists });
+    localStorage.setItem("playlists", JSON.stringify(updatedPlaylists));
+  };
+
+  const handleDeleteFromPlaylist = (videoId, playlist) => {
+    let updatedPlaylists = [...dataState.playlists];
+    const newVideos = playlist.videos.filter((id) => id !== videoId);
+    const newPlaylist = { ...playlist, videos: newVideos };
+
+    updatedPlaylists = updatedPlaylists.map((list) => {
+      if (list.id === playlist.id) {
+        return { ...newPlaylist };
+      }
+      return { ...list };
+    });
+
+    dataDispatch({ type: "SET_PLAYLISTS", payload: updatedPlaylists });
+    localStorage.setItem("playlists", JSON.stringify(updatedPlaylists));
+  };
+
+  const handleDeletePlaylist = (playlistId) => {
+    const updatedPlaylists = dataState.playlists.filter(
+      ({ id }) => id !== playlistId
+    );
+
+    dataDispatch({ type: "SET_PLAYLISTS", payload: updatedPlaylists });
+    localStorage.setItem("playlists", JSON.stringify(updatedPlaylists));
+  };
+
   const searchedVideos = applySearch(dataState.videos);
 
   const savedVideos = dataState.videos.filter(({ saved }) => saved);
@@ -116,6 +184,10 @@ export function DataProvider({ children }) {
         handleWatchLater,
         savedVideos,
         handleNotes,
+        playlists: dataState.playlists,
+        handleAddToPlaylist,
+        handleDeleteFromPlaylist,
+        handleDeletePlaylist,
       }}
     >
       {children}

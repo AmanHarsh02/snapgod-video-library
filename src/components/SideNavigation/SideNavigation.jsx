@@ -25,7 +25,7 @@ export function SideNavigation() {
           <div className="bg-gray-700 p-2 rounded-lg ">
             <HomeIcon />
           </div>
-          <p>Home</p>
+          <p className="hidden lg:block">Home</p>
         </NavLink>
 
         <NavLink
@@ -42,7 +42,7 @@ export function SideNavigation() {
           <div className="bg-gray-700 p-2 rounded-lg">
             <ExploreIcon />
           </div>
-          <p>Explore</p>
+          <p className="hidden lg:block">Explore</p>
         </NavLink>
 
         <NavLink
@@ -59,7 +59,7 @@ export function SideNavigation() {
           <div className="bg-gray-700 p-2 rounded-lg">
             <AddToPlaylistIcon />
           </div>
-          <p>Playlists</p>
+          <p className="hidden lg:block">Playlists</p>
         </NavLink>
 
         <NavLink
@@ -76,7 +76,7 @@ export function SideNavigation() {
           <div className="bg-gray-700 p-2 rounded-lg">
             <WatchLaterActiveIcon />
           </div>
-          <p>Watch Later</p>
+          <p className="hidden lg:block">Watch Later</p>
         </NavLink>
       </div>
     </div>

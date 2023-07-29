@@ -6,3 +6,7 @@ export { CategoryCard } from "./CategoryCard/CategoryCard";
 export { VideoCard } from "./VideoCard/VideoCard";
 export { Note } from "./Note/Note";
 export { AddNoteModal } from "./AddNoteModal/AddNoteModal";
+export { AddOrCreatePlaylistModal } from "./AddOrCreatePlaylistModal/AddOrCreatePlaylistModal";
+export { ExistingPlaylists } from "./ExistingPlaylists/ExistingPlaylists";
+export { PlaylistCard } from "./PlaylistCard/PlaylistCard";
+export { BottomNavigation } from "./BottomNavigation/BottomNavigation";

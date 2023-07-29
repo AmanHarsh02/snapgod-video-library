@@ -6,7 +6,7 @@ export function CategoryCard({ category }) {
   return (
     <Link
       to={`category/${categoryName}`}
-      className="group min-w-[300px] relative bg-gray-400 rounded-lg overflow-hidden "
+      className="group max-w-[300px] md:min-w-[300px] relative bg-gray-400 rounded-lg overflow-hidden "
     >
       <img
         src={thumbnail}

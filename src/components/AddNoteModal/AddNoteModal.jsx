@@ -30,7 +30,7 @@ export function AddNoteModal({
     >
       <div
         data-modal="modal"
-        className="flex flex-col gap-4 min-w-[20%] max-w-[40%] bg-gray-700 p-4 rounded-lg"
+        className="flex flex-col gap-4 min-w-[20%] md:max-w-[40%] bg-gray-700 p-4 rounded-lg"
       >
         <div
           className="cursor-pointer self-end"

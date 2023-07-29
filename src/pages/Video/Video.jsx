@@ -1,6 +1,11 @@
 import { useParams } from "react-router";
 import { useData } from "../../contexts/DataContext";
-import { Note, VideoCard, AddNoteModal } from "../../components/index";
+import {
+  Note,
+  VideoCard,
+  AddNoteModal,
+  AddOrCreatePlaylistModal,
+} from "../../components/index";
 import {
   BsStopwatch as WatchLaterIcon,
   BsFillStopwatchFill as WatchLaterActiveIcon,
@@ -9,12 +14,17 @@ import {
   MdPlaylistAdd as AddToPlaylistIcon,
   MdOutlineEditNote as AddNoteIcon,
 } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Video() {
   const { videoId } = useParams();
   const { videos, mostWatchedVideos, handleWatchLater } = useData();
   const [showNoteModal, setShowNoteModal] = useState();
+  const [showPlaylistModal, setShowPlaylistModal] = useState();
+
+  useEffect(() => {
+    document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
+  }, [videoId]);
 
   const selectedVideo = videos.find(({ _id }) => +_id === +videoId);
 
@@ -45,7 +55,10 @@ export function Video() {
                 <WatchLaterIcon size={24} />
               )}
             </div>
-            <div className="cursor-pointer p-2 rounded-full hover:bg-gray-700">
+            <div
+              className="cursor-pointer p-2 rounded-full hover:bg-gray-700"
+              onClick={() => setShowPlaylistModal(!showPlaylistModal)}
+            >
               <AddToPlaylistIcon size={24} />
             </div>
             <div
@@ -79,7 +92,7 @@ export function Video() {
       <h3>Most Watched</h3>
 
       {mostWatchedVideos.length > 0 && (
-        <div className="my-6 flex gap-4 flex-wrap">
+        <div className="my-6 flex gap-4 justify-center md:justify-start flex-wrap">
           {mostWatchedVideos.map((video) => {
             return <VideoCard video={video} key={video._id} />;
           })}
@@ -89,6 +102,14 @@ export function Video() {
       {showNoteModal && (
         <AddNoteModal
           setShowNoteModal={setShowNoteModal}
+          mode="add"
+          videoId={videoId}
+        />
+      )}
+
+      {showPlaylistModal && (
+        <AddOrCreatePlaylistModal
+          setShowPlaylistModal={setShowPlaylistModal}
           mode="add"
           videoId={videoId}
         />

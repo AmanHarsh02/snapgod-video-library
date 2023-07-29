@@ -57,7 +57,7 @@ function App() {
           }
         />
         <Route
-          path="/playlist/:playListId"
+          path="/playlist/:playlistId"
           element={
             <PageWrapper>
               <Playlist />

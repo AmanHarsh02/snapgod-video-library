@@ -15,11 +15,11 @@ export function SearchBar() {
   }, [location]);
 
   return (
-    <div className="grow max-w-[50%] flex justify-between items-center gap-2 rounded-lg bg-gray-700 px-2 ">
+    <div className="grow min-w-min max-w-[50%] flex justify-between items-center gap-2 rounded-lg bg-gray-700 px-2 ">
       <input
         type="text"
         placeholder="Search Videos..."
-        className="grow outline-none py-1.5 bg-gray-700"
+        className="grow md:w-max outline-none py-1.5 bg-gray-700"
         value={searchValue}
         onClick={() =>
           location?.pathname !== "/explore" && navigate("/explore")
