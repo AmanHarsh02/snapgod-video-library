@@ -53,26 +53,45 @@ export function DataProvider({ children }) {
     dataDispatch({ type: "SET_VIDEOS", payload: updatedVideos });
   };
 
-  const handleAddNote = (videoId, note) => {
-    const selectedVideo = dataState.videos.find(({ _id }) => _id === +videoId);
-    console.log(selectedVideo, selectedVideo?.notes, videoId);
+  const handleNotes = (videoId, note, action) => {
+    let selectedVideo = dataState.videos.find(({ _id }) => _id === +videoId);
+    let updatedVideos = [...dataState.videos];
+    let updatedNotes = [];
 
-    if (selectedVideo?.notes) {
-      selectedVideo.notes.push(note);
-    } else {
-      selectedVideo.notes = [note];
+    if (action === "add") {
+      updatedNotes = selectedVideo?.notes
+        ? [
+            ...selectedVideo.notes,
+            {
+              id: selectedVideo?.notes?.length + 1,
+              note,
+            },
+          ]
+        : [{ id: 1, note }];
+    } else if (action === "edit") {
+      updatedNotes = selectedVideo.notes.map((currNote) => {
+        if (+currNote.id === +note.id) {
+          return { ...currNote, note: note.note };
+        }
+        return { ...currNote };
+      });
+    } else if (action === "delete") {
+      updatedNotes = selectedVideo.notes.filter(
+        (currNote) => +currNote.id !== +note.id
+      );
     }
 
-    const updatedVideos = dataState.videos.map((video) => {
-      if (video._id === videoId) {
+    updatedVideos = updatedVideos.map((video) => {
+      if (video._id === +videoId) {
         if (!video?.saved) {
-          return { ...selectedVideo };
+          return { ...selectedVideo, notes: updatedNotes };
         }
       }
       return { ...video };
     });
 
     dataDispatch({ type: "SET_VIDEOS", payload: updatedVideos });
+    localStorage.setItem("notes", updatedNotes);
   };
 
   const searchedVideos = applySearch(dataState.videos);
@@ -91,7 +110,7 @@ export function DataProvider({ children }) {
         mostWatchedVideos,
         handleWatchLater,
         savedVideos,
-        handleAddNote,
+        handleNotes,
       }}
     >
       {children}

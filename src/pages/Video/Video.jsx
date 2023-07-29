@@ -58,20 +58,22 @@ export function Video() {
         </div>
 
         <hr></hr>
-      </div>
 
-      <div className="my-6 flex flex-col gap-4">
-        <h2>My Notes</h2>
+        <div className="my-6 flex flex-col gap-4">
+          <h2>My Notes</h2>
 
-        {notes?.length > 0 ? (
-          <div>
-            {notes.map((note, i) => {
-              return <Note note={note} key={i} />;
-            })}
-          </div>
-        ) : (
-          <p>You've not added any notes yet! ⛔</p>
-        )}
+          {notes?.length > 0 ? (
+            <div>
+              {notes.map((note, i) => {
+                return <Note note={note} videoId={videoId} key={i} />;
+              })}
+            </div>
+          ) : (
+            <p>You've not added any notes yet! ⛔</p>
+          )}
+        </div>
+
+        <hr></hr>
       </div>
 
       <h3>Most Watched</h3>
