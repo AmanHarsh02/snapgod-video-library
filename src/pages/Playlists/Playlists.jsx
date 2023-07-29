@@ -1,7 +1,7 @@
 export function Playlists() {
   return (
     <div>
-      <h3>Playlists Page</h3>
+      <h1>Playlists</h1>
     </div>
   );
 }

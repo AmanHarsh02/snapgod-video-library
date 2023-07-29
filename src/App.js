@@ -8,21 +8,70 @@ import {
   Video,
   WatchLater,
 } from "./pages/index";
-import { Navbar } from "./components/index";
+import { Navbar, PageWrapper } from "./components/index";
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-gray-900 min-h-screen text-white p-4">
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Categories />} />
-        <Route path="/category/:categoryName" element={<Category />} />
-        <Route path="/video/:videoId" element={<Video />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/playlists" element={<Playlists />} />
-        <Route path="/playlist/:playListId" element={<Playlist />} />
-        <Route path="/watch-later" element={<WatchLater />} />
+        <Route
+          path="/"
+          element={
+            <PageWrapper>
+              <Categories />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/category/:categoryName"
+          element={
+            <PageWrapper>
+              <Category />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/video/:videoId"
+          element={
+            <PageWrapper>
+              <Video />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/explore"
+          element={
+            <PageWrapper>
+              <Explore />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/playlists"
+          element={
+            <PageWrapper>
+              <Playlists />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/playlist/:playListId"
+          element={
+            <PageWrapper>
+              <Playlist />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="/watch-later"
+          element={
+            <PageWrapper>
+              <WatchLater />
+            </PageWrapper>
+          }
+        />
       </Routes>
     </div>
   );
