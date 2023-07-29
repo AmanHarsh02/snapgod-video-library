@@ -20,7 +20,12 @@ export function Playlist() {
 
   return (
     <div>
-      <h1>Playlists</h1>
+      <h1>
+        Playlist -{" "}
+        {selectedPlaylist?.playlistName ?? "This playlist no loger exists!"}
+      </h1>
+
+      {playlistVideos.length <= 0 && <p className="my-6">No videos found!</p>}
 
       {playlists.length > 0 && (
         <div className="my-6 flex gap-4 justify-center md:justify-start flex-wrap">

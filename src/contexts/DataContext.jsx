@@ -145,14 +145,20 @@ export function DataProvider({ children }) {
   const handleDeleteFromPlaylist = (videoId, playlist) => {
     let updatedPlaylists = [...dataState.playlists];
     const newVideos = playlist.videos.filter((id) => id !== videoId);
-    const newPlaylist = { ...playlist, videos: newVideos };
+    if (newVideos.length > 0) {
+      const newPlaylist = { ...playlist, videos: newVideos };
 
-    updatedPlaylists = updatedPlaylists.map((list) => {
-      if (list.id === playlist.id) {
-        return { ...newPlaylist };
-      }
-      return { ...list };
-    });
+      updatedPlaylists = updatedPlaylists.map((list) => {
+        if (list.id === playlist.id) {
+          return { ...newPlaylist };
+        }
+        return { ...list };
+      });
+    } else {
+      updatedPlaylists = updatedPlaylists.filter(
+        ({ id }) => id !== playlist.id
+      );
+    }
 
     dataDispatch({ type: "SET_PLAYLISTS", payload: updatedPlaylists });
     localStorage.setItem("playlists", JSON.stringify(updatedPlaylists));

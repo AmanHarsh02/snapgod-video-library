@@ -9,7 +9,7 @@ export function PageWrapper({ children }) {
 
       <main className="grow mb-[2rem]">{children}</main>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-600 block md:hidden z-30">
+      <div className="fixed bottom-0 left-0 right-0 bg-gray-800 block md:hidden shadow-black shadow-2xl z-30">
         <BottomNavigation />
       </div>
     </div>

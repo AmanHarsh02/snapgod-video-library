@@ -7,9 +7,8 @@ export function PlaylistCard({ playlist }) {
   const { id, playlistName, playlistDesc, videos: playlistVideos } = playlist;
   const navigate = useNavigate();
 
-  const { thumbnail } = videos.find(({ _id }, i) =>
-    playlistVideos.includes(String(_id))
-  );
+  const { thumbnail } =
+    videos.find(({ _id }) => playlistVideos.includes(String(_id))) ?? "";
 
   const handleCardClick = (e) => {
     const clickedOn = e.target.closest("[data-watch]");
