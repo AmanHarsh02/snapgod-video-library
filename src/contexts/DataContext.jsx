@@ -7,10 +7,16 @@ const DataContext = createContext();
 
 export function DataProvider({ children }) {
   const [dataState, dataDispatch] = useReducer(dataReducer, initialDataState);
+  const storedVideos = localStorage.getItem("videos");
 
   useEffect(() => {
     dataDispatch({ type: "SET_CATEGORIES", payload: categories });
-    dataDispatch({ type: "SET_VIDEOS", payload: videos });
+
+    if (storedVideos) {
+      dataDispatch({ type: "SET_VIDEOS", payload: JSON.parse(storedVideos) });
+    } else {
+      dataDispatch({ type: "SET_VIDEOS", payload: videos });
+    }
   }, []);
 
   const getVideosByCategory = (categoryName) => {
@@ -51,6 +57,7 @@ export function DataProvider({ children }) {
     });
 
     dataDispatch({ type: "SET_VIDEOS", payload: updatedVideos });
+    localStorage.setItem("videos", JSON.stringify(updatedVideos));
   };
 
   const handleNotes = (videoId, note, action) => {
@@ -83,15 +90,13 @@ export function DataProvider({ children }) {
 
     updatedVideos = updatedVideos.map((video) => {
       if (video._id === +videoId) {
-        if (!video?.saved) {
-          return { ...selectedVideo, notes: updatedNotes };
-        }
+        return { ...selectedVideo, notes: updatedNotes };
       }
       return { ...video };
     });
 
     dataDispatch({ type: "SET_VIDEOS", payload: updatedVideos });
-    localStorage.setItem("notes", updatedNotes);
+    localStorage.setItem("videos", JSON.stringify(updatedVideos));
   };
 
   const searchedVideos = applySearch(dataState.videos);
