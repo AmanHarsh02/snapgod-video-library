@@ -13,6 +13,8 @@ export function Playlists() {
     <div>
       <h1>Playlists</h1>
 
+      {playlists.length <= 0 && <p className="my-6">No playlists found!</p>}
+
       {playlists.length > 0 && (
         <div className="my-6 flex gap-4 justify-center md:justify-start flex-wrap">
           {playlists.map((playlist) => {
